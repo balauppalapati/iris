@@ -2,6 +2,8 @@ const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
 
+const loopbackConfig = require('./server/config.json');
+
 // Initiate backend `LoopBack`
 require(__dirname + '/server/server.js');
 
@@ -17,12 +19,16 @@ let win;
 
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600});
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    'use-content-size': true,
+  });
 
   // and load the index.html of the app.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'client/dist/index.html'),
-    protocol: 'file:',
+    pathname: 'iris.com:3000/',
+    protocol: 'http:',
     slashes: true
   }));
 
@@ -38,6 +44,8 @@ function createWindow() {
   });
 }
 
+app.commandLine.appendSwitch('host-rules', `MAP iris.com 127.0.0.1:${loopbackConfig.port}`);
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -47,9 +55,9 @@ app.on('ready', createWindow);
 app.on('window-all-closed', () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  // if (process.platform !== 'darwin') {
+  app.quit()
+  // }
 });
 
 app.on('activate', () => {

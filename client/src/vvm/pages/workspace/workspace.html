@@ -1,6 +1,6 @@
 <template>
 
-  <nav class="navbar navbar-light bg-nav-light navbar-toggleable-sm navbar-underline">
+  <nav class="navbar navbar-light navbar-toggleable justify-content-center bg-faded">
     <div class="navbar-nav">
       <a repeat.for="view of views | objectIterator" class="nav-item nav-link ${urlParams.view == view.key ? 'active' : ''}" route-href="route.bind: routes.Workspace; params.bind:{view: view.key}">
         ${view.value.title}
@@ -120,7 +120,7 @@
 
   <!-- Data Sources -->
   <div if.bind="urlParams.view == routeViews.DataSources">
-    <nav class="navbar navbar-light navbar-toggleable-sm mb-4 bg-nav-light2">
+    <nav class="navbar navbar-light navbar-toggleable-sm mb-4">
       <form class="form-inline mr-auto">
         <a class="btn btn-outline-primary my-2 my-sm-0" route-href="route.bind: routes.AddDataSource"><i class="zmdi zmdi-plus-circle"></i> Add Data Source</a>
       </form>

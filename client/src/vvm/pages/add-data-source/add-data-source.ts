@@ -1,6 +1,6 @@
 import {autoinject} from "aurelia-framework";
 import {DialogService} from "aurelia-dialog";
-import {SaveDataSource} from "./modals/save-data-source";
+import {SaveDataSource} from "../../modals/save-data-source";
 
 interface DataSourceItem {
   name: string;
@@ -67,11 +67,14 @@ export class AddDataSource {
 
   dialogService: DialogService;
 
+  selectedDataSource: DataSourceItem;
+
   constructor(dialogService: DialogService) {
     this.dialogService = dialogService;
   }
 
   saveDataSourceModal(dataSource: DataSourceItem) {
+    this.selectedDataSource = <DataSourceItem>{};
     this.dialogService.open({
       viewModel: SaveDataSource,
       model: {

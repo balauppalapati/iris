@@ -10,7 +10,7 @@ const dsnParamsRules = {
       'dsnParams.username': 'required|string',
       'dsnParams.password': 'required|string',
     },
-    sanitizationRules: {
+    sanitize: {
       'dsnParams.port': 'to_int',
     },
     fields: [
