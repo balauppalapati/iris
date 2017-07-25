@@ -1,22 +1,22 @@
 'use strict';
 
-var loopback = require('loopback');
-var boot = require('loopback-boot');
+const loopback = require('loopback');
+const boot = require('loopback-boot');
 
-var app = module.exports = loopback();
+const app = module.exports = loopback();
 
 app.start = () => {
   // start the web server
   return app.listen(() => {
     app.emit('started');
-    var baseUrl = app.get('url').replace(/\/$/, '');
+    const baseUrl = app.get('url').replace(/\/$/, '');
     console.log('Web server listening at: %s', baseUrl);
     if (app.get('loopback-component-explorer')) {
-      var explorerPath = app.get('loopback-component-explorer').mountPath;
+      const explorerPath = app.get('loopback-component-explorer').mountPath;
       console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
     }
     if (app.get('loopback-component-visualizer')) {
-      var explorerPath = app.get('loopback-component-visualizer').mountPath;
+      const explorerPath = app.get('loopback-component-visualizer').mountPath;
       console.log('Visualize your models at %s%s', baseUrl, explorerPath);
     }
   });
@@ -36,3 +36,6 @@ boot(app, __dirname, (err) => {
   }
 
 });
+
+require('./bootstrap/middleware')(loopback, app);
+

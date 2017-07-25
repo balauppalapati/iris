@@ -1,27 +1,11 @@
 import {autoinject} from "aurelia-framework";
 import {DialogController} from "aurelia-dialog";
 import indicative from "indicative";
-import {has} from "../../../../lib/utils/has-own-property";
-import {getDsnFormRules} from "../../../../../../common/dsn.js";
+import {has} from "../../lib/utils/has-own-property";
+import {FormRules, FormGroup} from "../../config/interfaces";
 
+const {getDsnFormRules} = require('../../../../common/dsn.js');
 const _set = require('lodash/set');
-
-interface Field {
-  label: string;
-  name: string;
-  type: string;
-  placeholder: string;
-  default?: any;
-  info?: string;
-  control?: string;
-}
-
-export interface FormRules {
-  fields: Field[];
-  rules: Object;
-  messages: Object;
-  sanitizationRules: Object;
-}
 
 @autoinject()
 export class SaveDataSource {
@@ -51,7 +35,7 @@ export class SaveDataSource {
 
     // Initialize form data with default values.
     this.dsnFormRules.fields.forEach(
-      (field: Field) => has.call(field, 'default') && (this.formData[field.name] = field.default)
+      (field: FormGroup) => has.call(field, 'default') && (this.formData[field.name] = field.default)
     );
 
     this.validateForm();
@@ -66,8 +50,8 @@ export class SaveDataSource {
     for (let key in this.formData) {
       _set(formModelData, key, this.formData[key]);
     }
-    if (has.call(this.dsnFormRules, 'sanitizationRules')) {
-      formModelData = indicative.sanitize(formModelData, this.dsnFormRules.sanitizationRules);
+    if (has.call(this.dsnFormRules, 'sanitize')) {
+      formModelData = indicative.sanitize(formModelData, this.dsnFormRules.sanitize);
     }
     this.formModelData = formModelData;
     return formModelData;

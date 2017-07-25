@@ -6,8 +6,10 @@ module.exports = server => {
 
   const autoupdateTables = () => {
 
-    const builtInModels = ['AccessToken', 'ACL', 'RoleMapping', 'Role'];
-    const models = ['dsn', 'dsnColumn', 'dsnDb', 'dsnTable', 'project', 'user', 'workbook', 'worksheet'].concat(builtInModels);
+    const builtInModels = ['ACL', 'RoleMapping', 'Role'];
+    const extendedModels = ['accessToken', 'user', 'userCredential', 'userIdentity'];
+    const appModels = ['dsn', 'dsnColumn', 'dsnDb', 'dsnTable', 'project', 'workbook', 'worksheet'];
+    const models = appModels.concat(builtInModels, extendedModels);
 
     models.forEach(model => {
       appDataSource.autoupdate(model, err => {

@@ -8,7 +8,7 @@
     <div class="row justify-content-md-center">
       <div class="col-md-6 form-group my-5">
         <label for="selectDataSource">Select a data source</label>
-        <select class="form-control" id="selectDataSource" value.bind="dataSource" select2="selected.bind:dataSource" change.delegate="saveDataSourceModal(dataSource)" data-placeholder="Pick a data source" style="width: 100%">
+        <select focus.one-time="true" class="form-control" id="selectDataSource" value.bind="selectedDataSource" select2="selected.bind:selectedDataSource" change.delegate="saveDataSourceModal(selectedDataSource)" data-placeholder="Pick a data source" style="width: 100%">
           <option></option>
           <optgroup if.bind="files.length" label="Files">
             <option repeat.for="option of files" model.bind="option">${option.name}</option>
